@@ -53,11 +53,8 @@ function App() {
             </PrivateRoute>
           }
         />
-        
-        <Route 
-          path="/" 
-          element={<Navigate to="/login" replace />}
-        />
+
+        <Route path="/" element={<Navigate to="/dashboard/home" replace />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
