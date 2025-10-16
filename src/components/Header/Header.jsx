@@ -1,10 +1,25 @@
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../features/auth/authOperations';
 import styles from './Header.module.css';
 
 const Header = () => {
-    return (
-        <header className={styles.header}>
-            <h1>MoneyGuard</h1>
-        </header>
-    );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await dispatch(logout());
+    navigate('/login');
+  };
+
+  return (
+    <header className={styles.header}>
+      <h1>MoneyGuard</h1>
+      <button type="button" className={styles.logout} onClick={handleLogout}>
+        Logout
+      </button>
+    </header>
+  );
 };
+
 export default Header;
