@@ -1,0 +1,36 @@
+@import url("./variables.css");
+@import url("./reset.css");
+@import url("./fonts.css");
+
+body {
+  font-family: var(--font-family);
+  font-weight: 400;
+  color: var(--white);
+  background-color: #101010;
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #ff868c;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #ff868d;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #ff868c3d transparent;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
+  transition: background-color 5000s;
+  background-color: transparent !important;
+}
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+}
