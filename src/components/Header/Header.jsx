@@ -1,23 +1,52 @@
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { logout } from '../../features/auth/authOperations';
+import { useState } from 'react';
+import { useAuth } from '../../hooks/useAuth';
+import ModalLogout from '../Modals/ModalLogout/ModalLogout';
 import styles from './Header.module.css';
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { user } = useAuth();
+  
+  // modal state controller
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
-  const handleLogout = async () => {
-    await dispatch(logout());
-    navigate('/login');
+  // open modal
+  const openLogoutModal = () => {
+    setIsLogoutModalOpen(true);
   };
+
+  // close modal
+  const closeLogoutModal = () => {
+    setIsLogoutModalOpen(false);
+  };
+
+  const username = user?.email?.split('@')[0] || 'User';
 
   return (
     <header className={styles.header}>
-      <h1>MoneyGuard</h1>
-      <button type="button" className={styles.logout} onClick={handleLogout}>
-        Logout
-      </button>
+      <div className={styles.logo}>
+        <span className={styles.logoIcon}></span>
+        <span className={styles.logoText}>Money Guard</span>
+      </div>
+
+      <div className={styles.userSection}>
+        <span className={styles.username}>{username}</span>
+
+        <button
+          type="button"
+          className={styles.exitButton}
+          onClick={openLogoutModal}
+          aria-label="Logout"
+        >
+          <span className={styles.exitIcon}></span>
+          Exit
+        </button>
+      </div>
+
+      <ModalLogout
+        isOpen={isLogoutModalOpen}
+        onClose={closeLogoutModal}
+      />
+
     </header>
   );
 };
