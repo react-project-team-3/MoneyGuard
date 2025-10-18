@@ -1,19 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { loginSchema } from '../../utils/authValidation';
-import { login } from '../../features/auth/authOperations';
+import { registerSchema } from '../../utils/authValidation';
+import { register as registerUser } from '../../features/auth/authOperations';
 import { clearError } from '../../features/auth/authSlice';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
-import styles from './LoginForm.module.css';
+import styles from './RegisterForm.module.css';
 import { Link } from 'react-router-dom';
 import EmailIcon from '../../assets/icons/email.svg?react';
 import LockIcon from '../../assets/icons/lock.svg?react';
+import UserIcon from '../../assets/icons/user.svg?react';
 
 // use shared schema
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.auth);
 
@@ -22,18 +23,27 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(registerSchema),
     mode: 'onBlur',
   });
 
   const onSubmit = async (data) => {
     dispatch(clearError());
-    await dispatch(login(data));
+    const { confirmPassword: _, ...userData } = data;
+    await dispatch(registerUser(userData));
   };
 
   return (
     <div className={styles.formContainer}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <Input
+          type="text"
+          placeholder="Username"
+          register={register('username')}
+          error={errors.username?.message}
+          icon={<UserIcon />}
+        />
+
         <Input
           type="email"
           placeholder="E-mail"
@@ -50,16 +60,24 @@ const LoginForm = () => {
           icon={<LockIcon />}
         />
 
+        <Input
+          type="password"
+          placeholder="Confirm password"
+          register={register('confirmPassword')}
+          error={errors.confirmPassword?.message}
+          icon={<LockIcon />}
+        />
+
         {error && <div className={styles.errorMessage}>{error}</div>}
 
         <div className={styles.buttonGroup}>
           <Button type="submit" variant="primary" disabled={isSubmitting}>
-            {isSubmitting ? 'Loading...' : 'Log In'}
+            {isSubmitting ? 'Loading...' : 'Register'}
           </Button>
 
-          <Link to="/register">
+          <Link to="/login">
             <Button type="button" variant="secondary">
-              Register
+              Log In
             </Button>
           </Link>
         </div>
@@ -68,4 +86,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
