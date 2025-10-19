@@ -1,14 +1,65 @@
-.backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+.form {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.modal {
-  background: #fff;
-  padding: 16px;
+.typeSwitch {
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+}
+
+.typeSwitch button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--color-text-white);
+  font-family: var(--font-family-secondary);
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.typeSwitch button.active {
+  background: var(--button-gradient);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.select {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 8px;
+  color: var(--color-text-white);
+  font-family: var(--font-family-secondary);
+  font-size: 16px;
+}
+
+.error {
+  font-size: 14px;
+  color: var(--color-accent-red);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .buttons {
+    flex-direction: row;
+    justify-content: center;
+  }
 }
