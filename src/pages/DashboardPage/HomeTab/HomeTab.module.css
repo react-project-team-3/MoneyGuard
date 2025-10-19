@@ -2,3 +2,14 @@
   position: relative;
   width: 100%;
 }
+
+.error {
+  padding: 16px;
+  margin-bottom: 16px;
+  background: rgba(255, 101, 150, 0.1);
+  border: 1px solid var(--color-accent-red);
+  border-radius: 8px;
+  color: var(--color-accent-red);
+  font-family: var(--font-family-secondary);
+  font-size: 14px;
+}

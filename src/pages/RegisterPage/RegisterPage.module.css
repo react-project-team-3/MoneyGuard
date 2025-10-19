@@ -8,22 +8,6 @@
   background: var(--bg-gradient);
 }
 
-.logoSection {
-  margin-bottom: 60px;
-}
-
-.logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-.logo svg {
-  width: 36px;
-  height: 36px;
-}
-
 .title {
   font-family: var(--font-family-primary);
   font-weight: 400;

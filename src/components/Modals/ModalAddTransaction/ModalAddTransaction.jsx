@@ -8,10 +8,13 @@ import { Modal, Input, Button } from '../../UI';
 import styles from './ModalAddTransaction.module.css';
 
 const schema = yup.object({
-  amount: yup.number().positive('Amount must be positive').required('Amount is required'),
+  amount: yup
+    .number()
+    .positive('Amount must be positive')
+    .required('Amount is required')
+    .typeError('Amount must be a number'),
   transactionDate: yup.date().required('Date is required'),
-  comment: yup.string(),
-  categoryId: yup.string().required('Category is required'),
+  comment: yup.string().max(100, 'Comment is too long'),
 });
 
 const ModalAddTransaction = ({ isOpen, onClose }) => {
@@ -22,29 +25,55 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
+    watch,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       transactionDate: new Date().toISOString().split('T')[0],
+      amount: '',
+      comment: '',
     },
   });
 
+  const categoryId = watch('categoryId');
+
   const onSubmit = async (data) => {
-    const transactionData = {
-      ...data,
-      type,
-      amount: parseFloat(data.amount),
-    };
+    console.log('Form Data:', data);
+    console.log('Type:', type);
     
-    await dispatch(addTransaction(transactionData));
+    const transactionData = {
+      transactionDate: data.transactionDate,
+      type: type,
+      amount: Number(data.amount),
+      comment: data.comment || '',
+    };
+
+    if (type === 'EXPENSE' && data.categoryId) {
+      transactionData.categoryId = data.categoryId;
+    }
+
+    console.log('Sending to backend:', transactionData);
+
+    try {
+      const result = await dispatch(addTransaction(transactionData)).unwrap();
+      console.log('Success:', result);
+      reset();
+      onClose();
+    } catch (error) {
+      console.error('Error adding transaction:', error);
+      alert(`Error: ${error}`);
+    }
+  };
+
+  const handleClose = () => {
     reset();
     onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Add Transaction">
+    <Modal isOpen={isOpen} onClose={handleClose} title="Add Transaction">
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div className={styles.typeSwitch}>
           <button
@@ -65,7 +94,12 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
 
         {type === 'EXPENSE' && (
           <div className={styles.field}>
-            <select {...register('categoryId')} className={styles.select}>
+            <select
+              {...register('categoryId', {
+                required: type === 'EXPENSE' ? 'Category is required' : false,
+              })}
+              className={styles.select}
+            >
               <option value="">Select category</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
@@ -100,8 +134,10 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
         />
 
         <div className={styles.buttons}>
-          <Button type="submit" variant="primary">Add</Button>
-          <Button type="button" variant="secondary" onClick={onClose}>
+          <Button type="submit" variant="primary" disabled={isSubmitting}>
+            {isSubmitting ? 'Adding...' : 'Add'}
+          </Button>
+          <Button type="button" variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
         </div>

@@ -10,6 +10,7 @@ import styles from './LoginForm.module.css';
 import { Link } from 'react-router-dom';
 import EmailIcon from '../../assets/icons/email.svg?react';
 import LockIcon from '../../assets/icons/lock.svg?react';
+import MoneyGuardIcon from '../../assets/icons/logo.svg?react';
 
 // use shared schema
 
@@ -33,6 +34,12 @@ const LoginForm = () => {
 
   return (
     <div className={styles.formContainer}>
+      <div className={styles.logoSection}>
+        <div className={styles.logo}>
+          <MoneyGuardIcon />
+          <h1 className={styles.title}>Money Guard</h1>
+        </div>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <Input
           type="email"
