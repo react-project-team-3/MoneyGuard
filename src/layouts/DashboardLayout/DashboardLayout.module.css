@@ -1,0 +1,45 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-gradient);
+}
+
+.mainContent {
+  display: flex;
+  flex: 1;
+  padding: 20px;
+  gap: 32px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.currencyDesktop {
+  display: none;
+}
+
+.content {
+  flex: 1;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .mainContent {
+    padding: 32px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .sidebar {
+    width: 320px;
+  }
+
+  .currencyDesktop {
+    display: block;
+  }
+}

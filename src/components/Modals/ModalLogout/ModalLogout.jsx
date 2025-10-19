@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../../../features/auth/authOperations';
 import Modal from '../../UI/Modal/Modal';
 import styles from './ModalLogout.module.css';
-import SVGIcon from '../../../assets/icons/moneyguard.svg?react';
+import SVGIcon from '../../../assets/icons/logo.svg?react';
 
 const ModalLogout = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();

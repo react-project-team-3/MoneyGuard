@@ -1,6 +1,6 @@
 import LoginForm from './LoginForm';
 import styles from './LoginPage.module.css';
-import MoneyGuardIcon from '../../assets/icons/moneyguard.svg?react';
+import MoneyGuardIcon from '../../assets/icons/logo.svg?react';
 
 const LoginPage = () => {
   return (

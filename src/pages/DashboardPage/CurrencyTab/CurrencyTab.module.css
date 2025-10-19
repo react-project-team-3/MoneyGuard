@@ -1,0 +1,16 @@
+.currencyTab {
+  width: 100%;
+}
+
+.title {
+  font-family: var(--font-family-primary);
+  font-size: 30px;
+  color: var(--color-text-white);
+  margin-bottom: 20px;
+}
+
+@media screen and (min-width: 1280px) {
+  .currencyTab {
+    display: none;
+  }
+}

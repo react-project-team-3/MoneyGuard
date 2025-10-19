@@ -1,57 +1,33 @@
-import axios from 'axios';
+import authApi from './authApi';
 
-//Get all transactions for logged in user
-export const getTransactionsApi = async (token) => {
-    const res = await axios.get(
-        '/api/transactions',
-        { 
-            headers: { "Authorization": `Bearer ${token}` }
-        }
-    );
-    return res.data;
+export const getTransactions = async () => {
+  const response = await authApi.get('/transactions');
+  return response.data;
 };
 
-//Update transaction
-export const updateTransactionsApi = async (transactionId, updateData, token) => {
-    const res = await axios.patch(
-        `/api/transactions/${transactionId}`, 
-        updateData, 
-        { 
-            headers: { "Authorization": `Bearer ${token}` }
-        }
-    );
-    return res.data;
-}
+export const addTransaction = async (transactionData) => {
+  const response = await authApi.post('/transactions', transactionData);
+  return response.data;
+};
 
-//Create new transaction for logged in user
-export const addTransactionsApi = async (transactionsData, token) => {
-    const res = await axios.post(
-        `/api/transactions`,
-        transactionsData,
-        { 
-            headers: { "Authorization": `Bearer ${token}` }
-        }
-    );
-    return res.data;
-}
+export const updateTransaction = async (id, transactionData) => {
+  const response = await authApi.patch(`/transactions/${id}`, transactionData);
+  return response.data;
+};
 
-//Remove transaction
-export const removeTransactionsApi = async (transactionId, token) =>{
-    const res = await axios.delete(
-        `/api/transactions/${transactionId}`,
-        { 
-            headers: { "Authorization": `Bearer ${token}` }
-        }
-    );
-    return res.data;
-}
+export const deleteTransaction = async (id) => {
+  const response = await authApi.delete(`/transactions/${id}`);
+  return response.data;
+};
 
-//Get transactions summary for period
-export const transactionsSummApi = async (date, token) => {
-    const res = await axios.get(
-        `https://wallet.b.goit.study/api/transactions-summary?month=${date.month}&year=${date.year}`,
-        { 
-            headers: {"Authorization" : `Bearer ${token}`} 
-        });
-    return res.data;
+export const getCategories = async () => {
+  const response = await authApi.get('/transaction-categories');
+  return response.data;
+};
+
+export const getTransactionsSummary = async (month, year) => {
+  const response = await authApi.get('/transactions-summary', {
+    params: { month, year },
+  });
+  return response.data;
 };
