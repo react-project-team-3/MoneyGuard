@@ -5,10 +5,12 @@ import {
   updateTransaction,
   deleteTransaction,
   fetchCategories,
+  getTransactionsSummary,
 } from './transactionsOperations';
 
 const initialState = {
   items: [],
+  categories: [],
   summary: {
     categoriesSummary: [],
     incomeSummary: 0,
@@ -18,7 +20,8 @@ const initialState = {
     month: null
   },
   date: { 
-    month: 9, year: 2025 
+    month: 9, 
+    year: 2025
   },
   loading: false,
   loadingSummary: false,
@@ -50,12 +53,12 @@ const transactionsSlice = createSlice({
         state.error = action.payload;
       })
       
-      //   fetchCategories
-      .addCase(fetchCategories.pending, (state) => {
+      //  getTransactionsSummary
+      .addCase(getTransactionsSummary.pending, (state) => {
         state.loadingSummary = true;
         state.errorSummary = null;
       })
-      .addCase(fetchCategories.fulfilled, (state, action) => {
+      .addCase(getTransactionsSummary.fulfilled, (state, action) => {
         state.loadingSummary = false;
         state.summary = {
           categoriesSummary: action.payload.categoriesSummary || [],
@@ -66,7 +69,7 @@ const transactionsSlice = createSlice({
           month: action.payload.month
         };
       })
-      .addCase(fetchCategories.rejected, (state, action) => {
+      .addCase(getTransactionsSummary.rejected, (state, action) => {
         state.loadingSummary = false;
         state.errorSummary = action.payload;
       })
@@ -115,6 +118,11 @@ const transactionsSlice = createSlice({
       .addCase(deleteTransaction.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+
+      // fetchCategories
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.categories = action.payload;
       });
   }
 });
