@@ -5,65 +5,127 @@ import {
   updateTransaction,
   deleteTransaction,
   fetchCategories,
+  getTransactionsSummary,
 } from './transactionsOperations';
 
 const initialState = {
   items: [],
   categories: [],
-  isLoading: false,
+  summary: {
+    categoriesSummary: [],
+    incomeSummary: 0,
+    expensesSummary: 0,
+    periodTotal: 0,
+    year: null,
+    month: null
+  },
+  date: { 
+    month: 9, 
+    year: 2025
+  },
+  loading: false,
+  loadingSummary: false,
   error: null,
+  errorSummary: null,
 };
 
 const transactionsSlice = createSlice({
   name: 'transactions',
   initialState,
-  reducers: {},
+  reducers: {
+    updateDate: (state, action) => {
+      state.date = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
+      // fetchTransactions
       .addCase(fetchTransactions.pending, (state) => {
-        state.isLoading = true;
+        state.loading = true;
         state.error = null;
       })
       .addCase(fetchTransactions.fulfilled, (state, action) => {
+        state.loading = false;
         state.items = action.payload;
-        state.isLoading = false;
       })
       .addCase(fetchTransactions.rejected, (state, action) => {
-        state.isLoading = false;
+        state.loading = false;
         state.error = action.payload;
       })
-
-      .addCase(addTransaction.pending, (state) => {
-        state.isLoading = true;
+      
+      //  getTransactionsSummary
+      .addCase(getTransactionsSummary.pending, (state) => {
+        state.loadingSummary = true;
+        state.errorSummary = null;
       })
-      .addCase(addTransaction.fulfilled, (state, action) => {
-        state.items.push(action.payload);
-        state.isLoading = false;
+      .addCase(getTransactionsSummary.fulfilled, (state, action) => {
+        state.loadingSummary = false;
+        state.summary = {
+          categoriesSummary: action.payload.categoriesSummary || [],
+          incomeSummary: action.payload.inconsSummary || 0,
+          expensesSummary: action.payload.expansionBinary || 0,
+          periodTotal: action.payload.periodTotal || 0,
+          year: action.payload.year,
+          month: action.payload.month
+        };
       })
-      .addCase(addTransaction.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
+      .addCase(getTransactionsSummary.rejected, (state, action) => {
+        state.loadingSummary = false;
+        state.errorSummary = action.payload;
       })
-
+      
+      // updateTransaction
+      .addCase(updateTransaction.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(updateTransaction.fulfilled, (state, action) => {
-        const index = state.items.findIndex(
-          (item) => item.id === action.payload.id
-        );
+        state.loading = false;
+        const updatedTransaction = action.payload;
+        const index = state.items.findIndex(item => item.id === updatedTransaction.id);
         if (index !== -1) {
-          state.items[index] = action.payload;
+          state.items[index] = updatedTransaction;
         }
       })
-
+      .addCase(updateTransaction.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      
+      // addTransaction
+      .addCase(addTransaction.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addTransaction.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items.push(action.payload);
+      })
+      .addCase(addTransaction.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      
+      // deleteTransaction
+      .addCase(deleteTransaction.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(deleteTransaction.fulfilled, (state, action) => {
-        state.items = state.items.filter(
-          (item) => item.id !== action.payload
-        );
+        state.loading = false;
+        state.items = state.items.filter(item => item.id !== action.payload);
+      })
+      .addCase(deleteTransaction.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       })
 
+      // fetchCategories
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.categories = action.payload;
       });
-  },
+  }
 });
 
+export const { updateDate } = transactionsSlice.actions;
 export default transactionsSlice.reducer;

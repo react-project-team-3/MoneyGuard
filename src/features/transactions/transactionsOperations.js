@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as transactionsApi from '../../api/transactionsApi';
+import authApi from '../../api/authApi';
 
 export const fetchTransactions = createAsyncThunk(
   'transactions/fetchAll',
@@ -45,6 +46,18 @@ export const deleteTransaction = createAsyncThunk(
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to delete transaction');
+    }
+  }
+);
+
+export const transactionsSummary = createAsyncThunk(
+  "transactions/transactionsSummary",
+  async (date, authApi) => {
+    try {
+      const data = await transactionsApi.getTransactionsSummary(date.month, date.year);
+      return data;
+    } catch (error) {
+      return authApi.rejectWithValue(error.message);
     }
   }
 );
