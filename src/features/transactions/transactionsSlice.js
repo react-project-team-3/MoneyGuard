@@ -17,6 +17,9 @@ const initialState = {
     year: null,
     month: null
   },
+  date: { 
+    month: 9, year: 2025 
+  },
   loading: false,
   loadingSummary: false,
   error: null,
@@ -27,15 +30,8 @@ const transactionsSlice = createSlice({
   name: 'transactions',
   initialState,
   reducers: {
-    clearErrors: (state) => {
-      state.error = null;
-      state.errorSummary = null;
-    },
-    clearSummary: (state) => {
-      state.summary = initialState.summary;
-    },
-    clearTransactions: (state) => {
-      state.items = [];
+    updateDate: (state, action) => {
+      state.date = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -123,5 +119,5 @@ const transactionsSlice = createSlice({
   }
 });
 
-export const { clearErrors, clearSummary, clearTransactions } = transactionsSlice.actions;
+export const { updateDate } = transactionsSlice.actions;
 export default transactionsSlice.reducer;
