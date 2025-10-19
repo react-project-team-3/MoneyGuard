@@ -6,7 +6,6 @@ import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute';
 import Loader from './components/Loader/Loader';
 
-// lazy loading pages
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage/DashboardPage'));
@@ -16,7 +15,6 @@ function App() {
   const dispatch = useDispatch();
   const { isRefreshing } = useSelector((state) => state.auth);
 
-  // token check
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
@@ -53,8 +51,11 @@ function App() {
             </PrivateRoute>
           }
         />
-
-        <Route path="/" element={<Navigate to="/dashboard/" replace />} />
+        
+        <Route 
+          path="/" 
+          element={<Navigate to="/dashboard/home" replace />}
+        />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

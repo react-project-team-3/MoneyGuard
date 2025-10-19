@@ -1,0 +1,75 @@
+.container {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  font-family: var(--font-family-secondary);
+  color: var(--color-text-white);
+}
+
+.table th {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table td {
+  font-size: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.categoryName {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.amount {
+  text-align: right;
+  font-weight: 700;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-family-secondary);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-white);
+}
+
+.expense {
+  color: var(--color-accent-red);
+}
+
+.income {
+  color: var(--color-success-green);
+}
+
+.empty {
+  padding: 40px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-family-secondary);
+}
