@@ -24,10 +24,3 @@ export const getCategories = async () => {
   const response = await authApi.get('/transaction-categories');
   return response.data;
 };
-
-export const getTransactionsSummary = async (month, year) => {
-  const response = await authApi.get('/transactions-summary', {
-    params: { month, year },
-  });
-  return response.data;
-};
