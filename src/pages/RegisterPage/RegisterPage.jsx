@@ -1,6 +1,6 @@
 import RegisterForm from './RegisterForm';
 import styles from './RegisterPage.module.css';
-import MoneyGuardIcon from '../../assets/icons/moneyguard.svg?react';
+import MoneyGuardIcon from '../../assets/icons/logo.svg?react';
 
 const RegisterPage = () => {
   return (

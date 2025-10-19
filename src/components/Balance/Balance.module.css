@@ -1,4 +1,22 @@
-.container{
-    padding: 20px;
-    background-color: #e0e0e0;
+.balance {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.label {
+  font-family: var(--font-family-secondary);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.amount {
+  font-family: var(--font-family-primary);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-text-white);
 }

@@ -28,13 +28,21 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.user = {
-          username: action.payload.username,
-          email: action.payload.email,
-        };
+        const payload = action.payload || {};
+        // Support payload shapes: { username, email, token } or { user: { ... }, token }
+        const userData =
+          payload.user ||
+          (payload.username ? { username: payload.username, email: payload.email } : payload);
+        const token =
+          payload.token || payload.accessToken || (payload.data && payload.data.token) || null;
+        // ensure username exists for display
+        if (userData && !userData.username && userData.email) {
+          userData.username = userData.email.split('@')[0];
+        }
+        state.user = userData;
         state.isLoading = false;
-        state.token = action.payload.token;
-        state.isLoggedIn = true;
+        state.token = token;
+        state.isLoggedIn = !!token;
         state.error = null;
       })
       .addCase(register.rejected, (state, action) => {
@@ -48,13 +56,16 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.user = {
-          username: action.payload.username,
-          email: action.payload.email,
-        };
+        const payload = action.payload || {};
+        const userData =
+          payload.user ||
+          (payload.username ? { username: payload.username, email: payload.email } : payload);
+        const token =
+          payload.token || payload.accessToken || (payload.data && payload.data.token) || null;
+        state.user = userData;
         state.isLoading = false;
-        state.token = action.payload.token;
-        state.isLoggedIn = true;
+        state.token = token;
+        state.isLoggedIn = !!token;
         state.error = null;
       })
       .addCase(login.rejected, (state, action) => {

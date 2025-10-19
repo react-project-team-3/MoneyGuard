@@ -1,21 +1,32 @@
-import styles from './Navigation.module.css';
 import { NavLink } from 'react-router-dom';
+import styles from './Navigation.module.css';
+import HomeIcon from '../../assets/icons/home.svg?react';
+import StatisticsIcon from '../../assets/icons/statistics.svg?react';
 
 const Navigation = () => {
   return (
     <nav className={styles.nav}>
-      <ul className={styles.navList}>
-        <li>
-          <NavLink to="/dashboard/home">Home</NavLink>
-        </li>
-        <li>
-          <NavLink to="/dashboard/statistics">Statistics</NavLink>
-        </li>
-        <li>
-          <NavLink to="/dashboard/currency">Currency</NavLink>
-        </li>
-      </ul>
+      <NavLink
+        to="/dashboard/home"
+        className={({ isActive }) =>
+          isActive ? `${styles.link} ${styles.active}` : styles.link
+        }
+      >
+        <HomeIcon />
+        <span>Home</span>
+      </NavLink>
+
+      <NavLink
+        to="/dashboard/statistics"
+        className={({ isActive }) =>
+          isActive ? `${styles.link} ${styles.active}` : styles.link
+        }
+      >
+        <StatisticsIcon />
+        <span>Statistics</span>
+      </NavLink>
     </nav>
   );
 };
+
 export default Navigation;
