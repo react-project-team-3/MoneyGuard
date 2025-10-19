@@ -1,0 +1,43 @@
+:root {
+  --font-size-h1: 30px;
+  --font-size-h2: 24px;
+  --font-size-body: 18px;
+  --font-size-small: 16px;
+  --font-size-xs: 14px;
+  --font-size-button: 18px;
+  
+  --line-height-heading: 1.5;
+  --line-height-body: 1.5;
+  
+  --letter-spacing-button: 0.1em;
+  --letter-spacing-normal: 0.02em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-primary);
+  line-height: var(--line-height-heading);
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: 400;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: 400;
+}
+
+p {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  margin: 0;
+}
+
+button {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-button);
+  letter-spacing: var(--letter-spacing-button);
+}

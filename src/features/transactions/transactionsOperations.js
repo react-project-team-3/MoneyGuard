@@ -1,82 +1,62 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { 
-  getTransactionsApi,
-  transactionsSummApi,
-  updateTransactionsApi,
-  addTransactionsApi,
-  deleteTransactionApi
-} from '../../api/transactionsApi';
-
+import * as transactionsApi from '../../api/transactionsApi';
 
 export const fetchTransactions = createAsyncThunk(
-  "transactions/getAll",
-    async (_, {rejectWithValue, getState}) => {
-      try {
-        const token = getState().auth?.token;
-        const res = await getTransactionsApi(token);
-        return res;
-      } catch (error) {
-        return rejectWithValue(error.response?.data?.message || error.message || "An error occurred while processing transactions");
-      }
+  'transactions/fetchAll',
+  async (_, { rejectWithValue }) => {
+    try {
+      const data = await transactionsApi.getTransactions();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to fetch transactions');
     }
+  }
 );
 
-export const transactionsSummary = createAsyncThunk(
-  "transactions/transactionsSummary",
-    async (date, {rejectWithValue, getState}) => {
-      try {
-        const token = getState().auth?.token;
-        const res = await transactionsSummApi(date, token);
-        return res;
-      } catch (error) {
-        return rejectWithValue(
-          error.response?.data?.message || error.message || "An error occured while taking summary"
-        );
-      }
+export const addTransaction = createAsyncThunk(
+  'transactions/add',
+  async (transactionData, { rejectWithValue }) => {
+    try {
+      const data = await transactionsApi.addTransaction(transactionData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to add transaction');
     }
+  }
 );
 
 export const updateTransaction = createAsyncThunk(
-  "transactions/updateTransaction",
-  async ({ transactionId, updateData }, { rejectWithValue, getState }) => {
-    try{
-      const token = getState().auth?.token;
-      const res = await updateTransactionsApi(transactionId, updateData, token);
-      return res;
+  'transactions/update',
+  async ({ id, transactionData }, { rejectWithValue }) => {
+    try {
+      const data = await transactionsApi.updateTransaction(id, transactionData);
+      return data;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || error.message || "An error occurred while updating the transaction"
-      );
+      return rejectWithValue(error.response?.data?.message || 'Failed to update transaction');
     }
   }
-)
-
-export const addTransaction = createAsyncThunk(
-  "transactions/addTransaction",
-  async (transactionData, { rejectWithValue, getState }) => {
-    try{
-      const token = getState().auth?.token;
-      const res = await addTransactionsApi(transactionData, token);
-      return res;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || error.message || "An error occured while adding new transaction"
-      );
-    }
-  } 
-)
+);
 
 export const deleteTransaction = createAsyncThunk(
-  "transactions/deleteTransaction",
-  async (transactionId, { rejectWithValue, getState }) => {
+  'transactions/delete',
+  async (id, { rejectWithValue }) => {
     try {
-      const token = getState().auth?.token;
-      await deleteTransactionApi(transactionId, token);
-      return transactionId;
+      await transactionsApi.deleteTransaction(id);
+      return id;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || error.message || "İşlem silinirken hata oluştu"
-      );
+      return rejectWithValue(error.response?.data?.message || 'Failed to delete transaction');
+    }
+  }
+);
+
+export const fetchCategories = createAsyncThunk(
+  'transactions/fetchCategories',
+  async (_, { rejectWithValue }) => {
+    try {
+      const data = await transactionsApi.getCategories();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to fetch categories');
     }
   }
 );

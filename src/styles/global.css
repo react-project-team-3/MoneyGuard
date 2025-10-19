@@ -1,0 +1,36 @@
+body {
+  font-family: var(--font-family-primary);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--color-text-white);
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input {
+  font-family: inherit;
+}
+
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-primary-yellow);
+  outline-offset: 2px;
+}

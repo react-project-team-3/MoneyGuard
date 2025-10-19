@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../../../features/auth/authOperations';
 import Modal from '../../UI/Modal/Modal';
 import styles from './ModalLogout.module.css';
+import SVGIcon from '../../../assets/icons/logo.svg?react';
 
 const ModalLogout = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -13,15 +14,15 @@ const ModalLogout = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Modal 
-      isOpen={isOpen} 
-      onClose={onClose}
-      title="Log out"
-    >
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <div className={styles.logo}>
+        <span className={styles.logoIcon}>
+          <SVGIcon />
+        </span>
+        <span className={styles.logoText}>Money Guard</span>
+      </div>
       <div className={styles.content}>
-        <p className={styles.question}>
-          Are you sure you want to log out?
-        </p>
+        <p className={styles.question}>Are you sure you want to log out?</p>
 
         <div className={styles.buttonGroup}>
           <button

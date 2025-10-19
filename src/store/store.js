@@ -11,25 +11,25 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import authReducer from '../features/auth/authSlice';
+import transactionsReducer from '../features/transactions/transactionsSlice';
+import statisticsReducer from '../features/statistics/statisticsSlice';
+import currencyReducer from '../features/currency/currencySlice';
 
-// PERSIST CONFIG
 const authPersistConfig = {
-  key: 'auth',              
-  storage,                  
-  whitelist: ['token'],     
+  key: 'auth',
+  storage,
+  whitelist: ['token', 'user'],
 };
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
-// STORE
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
-    // transactions: transactionsReducer
-    // statistics: statisticsReducer
-    // global: globalReducer
+    transactions: transactionsReducer,
+    statistics: statisticsReducer,
+    currency: currencyReducer,
   },
-  
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
