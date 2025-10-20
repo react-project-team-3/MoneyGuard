@@ -7,12 +7,14 @@ import {
   setAuthToken 
 } from '../../api/authApi';
 
-// register
 export const register = createAsyncThunk(
   'auth/register',
   async (userData, { rejectWithValue }) => {
     try {
       const data = await registerUser(userData);
+      if (data.token) {
+        setAuthToken(data.token);
+      }
       return data;
     } catch (error) {
       const message = error.response?.data?.message || 'Registration failed';
@@ -21,12 +23,14 @@ export const register = createAsyncThunk(
   }
 );
 
-// login
 export const login = createAsyncThunk(
   'auth/login',
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await loginUser(credentials);
+      if (data.token) {
+        setAuthToken(data.token);
+      }
       return data;
     } catch (error) {
       const message = error.response?.data?.message || 'Login failed';
@@ -35,7 +39,6 @@ export const login = createAsyncThunk(
   }
 );
 
-// logout
 export const logout = createAsyncThunk(
   'auth/logout',
   async () => {
@@ -47,7 +50,6 @@ export const logout = createAsyncThunk(
   }
 );
 
-// refresh user
 export const refreshUser = createAsyncThunk(
   'auth/refresh',
   async (_, { getState, rejectWithValue }) => {

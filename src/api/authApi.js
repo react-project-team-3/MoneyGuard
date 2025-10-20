@@ -9,7 +9,34 @@ const authApi = axios.create({
   },
 });
 
-// token yönetimi
+const getTokenFromStorage = () => {
+  try {
+    const persistAuth = localStorage.getItem('persist:auth');
+    if (persistAuth) {
+      const parsedAuth = JSON.parse(persistAuth);
+      if (parsedAuth.token) {
+        let token = JSON.parse(parsedAuth.token);
+        if (typeof token === 'string') {
+          token = token.replace(/^["'](.*)["']$/, '$1');
+        }
+        return token;
+      }
+    }
+  } catch (error) {
+    console.error('Error getting token from storage:', error);
+  }
+  return null;
+};
+
+authApi.interceptors.request.use((config) => {
+  const token = getTokenFromStorage();
+  console.log('[authApi] Request interceptor - Token:', token ? 'VAR (length: ' + token.length + ')' : 'YOK');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export const setAuthToken = (token) => {
   if (token) {
     authApi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -22,9 +49,6 @@ export const clearAuthToken = () => {
   delete authApi.defaults.headers.common['Authorization'];
 };
 
-// API endpoints
-
-// register
 export const registerUser = async (userData) => {
   const response = await authApi.post('/auth/sign-up', userData);
   if (response.data.token) {
@@ -33,7 +57,6 @@ export const registerUser = async (userData) => {
   return response.data;
 };
 
-// login
 export const loginUser = async (credentials) => {
   const response = await authApi.post('/auth/sign-in', credentials);
   if (response.data.token) {
@@ -42,7 +65,6 @@ export const loginUser = async (credentials) => {
   return response.data;
 };
 
-// logout
 export const logoutUser = async () => {
   try {
     const response = await authApi.delete('/auth/sign-out');
@@ -54,13 +76,11 @@ export const logoutUser = async () => {
   }
 };
 
-// get current user
 export const getCurrentUser = async () => {
   const response = await authApi.get('/users/current');
   return response.data;
 };
 
-// response interceptor
 authApi.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -72,5 +92,7 @@ authApi.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+console.log('[authApi] Module loaded, interceptor added');
 
 export default authApi;

@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useDispatch } from 'react-redux';
 import { deleteTransaction } from '../../features/transactions/transactionsOperations';
 import ModalEditTransaction from '../Modals/ModalEditTransaction/ModalEditTransaction';
-import styles from './TransactionsList.module.css';
+import styles from './TransactionsItem.module.css';
 
 const TransactionItem = ({ transaction }) => {
   const dispatch = useDispatch();
@@ -30,10 +31,10 @@ const TransactionItem = ({ transaction }) => {
             {isIncome ? '+' : '-'}
           </span>
         </td>
-        <td>{transaction.categoryId}</td>
+        <td>{transaction.categoryId || '-'}</td>
         <td>{transaction.comment || '-'}</td>
         <td className={isIncome ? styles.amountIncome : styles.amountExpense}>
-          {transaction.amount.toFixed(2)}
+          {Math.abs(transaction.amount).toFixed(2)}
         </td>
         <td>
           <div className={styles.actions}>
@@ -55,11 +56,14 @@ const TransactionItem = ({ transaction }) => {
         </td>
       </tr>
 
-      <ModalEditTransaction
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        transaction={transaction}
-      />
+      {isEditModalOpen && createPortal(
+        <ModalEditTransaction
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          transaction={transaction}
+        />,
+        document.body
+      )}
     </>
   );
 };

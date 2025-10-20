@@ -8,7 +8,7 @@ export const fetchTransactions = createAsyncThunk(
       const data = await transactionsApi.getTransactions();
       return data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch transactions');
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
@@ -20,7 +20,19 @@ export const addTransaction = createAsyncThunk(
       const data = await transactionsApi.addTransaction(transactionData);
       return data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to add transaction');
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
+
+export const deleteTransaction = createAsyncThunk(
+  'transactions/delete',
+  async (transactionId, { rejectWithValue }) => {
+    try {
+      await transactionsApi.deleteTransaction(transactionId);
+      return { id: transactionId };
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
@@ -32,19 +44,7 @@ export const updateTransaction = createAsyncThunk(
       const data = await transactionsApi.updateTransaction(id, transactionData);
       return data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to update transaction');
-    }
-  }
-);
-
-export const deleteTransaction = createAsyncThunk(
-  'transactions/delete',
-  async (id, { rejectWithValue }) => {
-    try {
-      await transactionsApi.deleteTransaction(id);
-      return id;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to delete transaction');
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
@@ -56,7 +56,7 @@ export const fetchCategories = createAsyncThunk(
       const data = await transactionsApi.getCategories();
       return data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch categories');
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );

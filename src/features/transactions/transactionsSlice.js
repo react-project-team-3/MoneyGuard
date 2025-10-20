@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchTransactions,
   addTransaction,
-  updateTransaction,
   deleteTransaction,
+  updateTransaction,
   fetchCategories,
 } from './transactionsOperations';
 
 const initialState = {
-  items: [],
+  transactions: [],
   categories: [],
   isLoading: false,
   error: null,
@@ -25,43 +25,64 @@ const transactionsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchTransactions.fulfilled, (state, action) => {
-        state.items = action.payload;
         state.isLoading = false;
+        state.transactions = action.payload;
       })
       .addCase(fetchTransactions.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-
       .addCase(addTransaction.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(addTransaction.fulfilled, (state, action) => {
-        state.items.push(action.payload);
         state.isLoading = false;
+        state.transactions.push(action.payload);
       })
       .addCase(addTransaction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-
+      .addCase(deleteTransaction.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteTransaction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.transactions = state.transactions.filter(
+          (transaction) => transaction.id !== action.payload.id
+        );
+      })
+      .addCase(deleteTransaction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateTransaction.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(updateTransaction.fulfilled, (state, action) => {
-        const index = state.items.findIndex(
-          (item) => item.id === action.payload.id
+        state.isLoading = false;
+        const index = state.transactions.findIndex(
+          (transaction) => transaction.id === action.payload.id
         );
         if (index !== -1) {
-          state.items[index] = action.payload;
+          state.transactions[index] = action.payload;
         }
       })
-
-      .addCase(deleteTransaction.fulfilled, (state, action) => {
-        state.items = state.items.filter(
-          (item) => item.id !== action.payload
-        );
+      .addCase(updateTransaction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       })
-
+      .addCase(fetchCategories.pending, (state) => {
+        state.error = null;
+      })
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.categories = action.payload;
+      })
+      .addCase(fetchCategories.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });
