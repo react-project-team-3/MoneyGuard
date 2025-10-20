@@ -7,38 +7,69 @@ import { Modal, Input, Button } from '../../UI';
 import styles from './ModalEditTransaction.module.css';
 
 const schema = yup.object({
-  amount: yup.number().positive('Amount must be positive').required('Amount is required'),
-  transactionDate: yup.date().required('Date is required'),
-  comment: yup.string(),
+  amount: yup
+    .number()
+    .positive('Amount must be positive')
+    .required('Amount is required')
+    .typeError('Amount must be a number'),
+  transactionDate: yup.string().required('Date is required'),
+  comment: yup.string().max(100, 'Comment is too long'),
 });
 
 const ModalEditTransaction = ({ isOpen, onClose, transaction }) => {
   const dispatch = useDispatch();
 
+  const isExpense = transaction?.type === 'EXPENSE';
+  
+  // ✅ Tarihi doğru formatta al (YYYY-MM-DD)
+  const getDateValue = (dateString) => {
+    if (!dateString) return '';
+    // API'den gelen tarih "2025-10-17T00:00:00.000Z" formatında
+    // Sadece YYYY-MM-DD kısmını al
+    return dateString.split('T')[0];
+  };
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      amount: transaction?.amount || 0,
-      transactionDate: transaction?.transactionDate?.split('T')[0] || '',
+      amount: Math.abs(transaction?.amount || 0),
+      transactionDate: getDateValue(transaction?.transactionDate),
       comment: transaction?.comment || '',
     },
   });
 
   const onSubmit = async (data) => {
-    const transactionData = {
-      ...data,
-      amount: parseFloat(data.amount),
-    };
+    let amount = Number(data.amount);
     
-    await dispatch(updateTransaction({ 
-      id: transaction.id, 
-      transactionData 
-    }));
-    onClose();
+    if (isExpense) {
+      amount = -Math.abs(amount);
+    } else {
+      amount = Math.abs(amount);
+    }
+
+    // ✅ Tarihi olduğu gibi gönder (YYYY-MM-DD formatında)
+    const transactionData = {
+      transactionDate: data.transactionDate,
+      amount: amount,
+      comment: data.comment || '',
+    };
+
+    console.log('Updating transaction:', transactionData);
+
+    try {
+      await dispatch(updateTransaction({ 
+        id: transaction.id, 
+        transactionData 
+      })).unwrap();
+      onClose();
+    } catch (error) {
+      console.error('Error updating transaction:', error);
+      alert(`Error: ${error}`);
+    }
   };
 
   return (
@@ -65,7 +96,9 @@ const ModalEditTransaction = ({ isOpen, onClose, transaction }) => {
         />
 
         <div className={styles.buttons}>
-          <Button type="submit" variant="primary">Save</Button>
+          <Button type="submit" variant="primary" disabled={isSubmitting}>
+            {isSubmitting ? 'Saving...' : 'Save'}
+          </Button>
           <Button type="button" variant="secondary" onClick={onClose}>
             Cancel
           </Button>

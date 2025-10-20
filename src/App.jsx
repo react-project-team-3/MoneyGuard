@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshUser } from './features/auth/authOperations';
+import { setAuthToken } from './api/authApi';
 import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute';
 import Loader from './components/Loader/Loader';
@@ -13,11 +14,14 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 function App() {
   const dispatch = useDispatch();
-  const { isRefreshing } = useSelector((state) => state.auth);
+  const { isRefreshing, token } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    if (token) {
+      setAuthToken(token);
+    }
     dispatch(refreshUser());
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   if (isRefreshing) {
     return <Loader />;

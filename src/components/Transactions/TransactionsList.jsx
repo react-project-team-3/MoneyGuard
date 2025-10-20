@@ -3,13 +3,13 @@ import TransactionItem from './TransactionsItem';
 import styles from './TransactionsList.module.css';
 
 const TransactionsList = () => {
-  const { items, isLoading } = useSelector((state) => state.transactions);
+  const { transactions, isLoading } = useSelector((state) => state.transactions);
 
   if (isLoading) {
-    return <div className={styles.loading}>Loading transactions...</div>;
+    return <div className={styles.loading}>Loading...</div>;
   }
 
-  if (items.length === 0) {
+  if (!transactions || transactions.length === 0) {
     return <div className={styles.empty}>No transactions yet</div>;
   }
 
@@ -27,7 +27,7 @@ const TransactionsList = () => {
           </tr>
         </thead>
         <tbody>
-          {items.map((transaction) => (
+          {transactions.map((transaction) => (
             <TransactionItem key={transaction.id} transaction={transaction} />
           ))}
         </tbody>
