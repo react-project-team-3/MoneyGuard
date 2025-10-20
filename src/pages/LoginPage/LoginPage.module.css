@@ -5,7 +5,10 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: var(--bg-gradient);
+   background: 
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), /* yarı saydam katman */
+    url('../../assets/images/bg-login.jpg') no-repeat center center;
+  background-size: cover;
 }
 
 .logoSection {
@@ -24,6 +27,7 @@
   height: 36px;
 }
 
+
 .title {
   font-family: var(--font-family-primary);
   font-weight: 400;
@@ -34,6 +38,7 @@
 .formSection {
   width: 100%;
   max-width: 533px;
+  
 }
 
 @media screen and (min-width: 768px) {
@@ -49,6 +54,7 @@
 
   .logo svg {
     width: 40px;
-    height: 40px;
+    height: 40px; 
   }
+  
 }
