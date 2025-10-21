@@ -7,9 +7,8 @@
   bottom: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(34, 13, 91, 0.23);
-  backdrop-filter: blur(3.5px);
-  -webkit-backdrop-filter: blur(3.5px); /* Safari için */
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
   align-items: center;

@@ -108,17 +108,16 @@ const authSlice = createSlice({
       })
 
       .addCase(addTransaction.fulfilled, (state, action) => {
-        if (action.payload.balanceAfter !== undefined && state.user) {
+        if (state.user && action.payload?.balanceAfter !== undefined) {
           state.user.balance = action.payload.balanceAfter;
         }
       })
-      .addCase(deleteTransaction.fulfilled, (state, action) => {
-        if (action.payload.balanceAfter !== undefined && state.user) {
-          state.user.balance = action.payload.balanceAfter;
-        }
+
+      .addCase(deleteTransaction.fulfilled, () => {
       })
+
       .addCase(updateTransaction.fulfilled, (state, action) => {
-        if (action.payload.balanceAfter !== undefined && state.user) {
+        if (state.user && action.payload?.balanceAfter !== undefined) {
           state.user.balance = action.payload.balanceAfter;
         }
       });

@@ -31,6 +31,19 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.categoryCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.colorBox {
+  width: 24px;
+  height: 24px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
 .categoryName {
   display: flex;
   align-items: center;

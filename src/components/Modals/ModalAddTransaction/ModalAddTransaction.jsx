@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { addTransaction } from '../../../features/transactions/transactionsOperations';
+import { refreshUser } from '../../../features/auth/authOperations';
 import { Modal, Input, Button } from '../../UI';
 import styles from './ModalAddTransaction.module.css';
 
@@ -27,8 +28,6 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
   const { categories } = useSelector((state) => state.transactions);
   const [type, setType] = useState('EXPENSE');
 
-  const incomeCategory = categories.find((cat) => cat.type === 'INCOME');
-
   const {
     register,
     handleSubmit,
@@ -45,18 +44,34 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
     },
   });
 
+  useEffect(() => {
+    reset({
+      transactionDate: new Date().toISOString().split('T')[0],
+      amount: '',
+      comment: '',
+      categoryId: '',
+    });
+  }, [type, reset]);
+
   const onSubmit = async (data) => {
-    const amount = Math.abs(Number(data.amount));
+    let amount = Math.abs(Number(data.amount));
+    
+    if (type === 'EXPENSE') {
+      amount = -amount;
+    }
 
     let categoryId;
     if (type === 'INCOME') {
+      const incomeCategory = categories.find((cat) => cat.type === 'INCOME');
       categoryId = incomeCategory?.id;
+      
       if (!categoryId) {
-        alert('Income category not found. Please contact support.');
+        alert('Income category not found.');
         return;
       }
     } else {
       categoryId = data.categoryId;
+      
       if (!categoryId) {
         alert('Please select a category');
         return;
@@ -73,6 +88,7 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
 
     try {
       await dispatch(addTransaction(transactionData)).unwrap();
+      await dispatch(refreshUser());
       reset();
       onClose();
     } catch (error) {

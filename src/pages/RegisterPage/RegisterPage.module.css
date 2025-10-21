@@ -6,33 +6,25 @@
   justify-content: center;
   padding: 20px;
   background: var(--bg-gradient);
+  position: relative;
 }
 
-.title {
-  font-family: var(--font-family-primary);
-  font-weight: 400;
-  font-size: 30px;
-  color: var(--color-text-white);
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../../assets/images/register-desktop.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  z-index: 0;
 }
 
 .formSection {
-  width: 100%;
-  max-width: 533px;
-}
-
-@media screen and (min-width: 768px) {
-  .container {
-    flex-direction: row;
-    gap: 100px;
-    padding: 40px;
-  }
-
-  .logoSection {
-    margin-bottom: 0;
-  }
-
-  .logo svg {
-    width: 40px;
-    height: 40px;
-  }
+  position: relative;
+  z-index: 1;
 }

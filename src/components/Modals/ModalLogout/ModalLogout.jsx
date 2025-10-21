@@ -1,13 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../features/auth/authOperations';
 import Modal from '../../UI/Modal/Modal';
+import Button from '../../UI/Button/Button';
 import styles from './ModalLogout.module.css';
-import SVGIcon from '../../../assets/icons/logo.svg?react';
+import LogoIcon from '../../../assets/icons/logo.svg?react';
 
 const ModalLogout = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
 
-  // logout
   const handleLogout = () => {
     dispatch(logout());
     onClose();
@@ -15,31 +15,21 @@ const ModalLogout = ({ isOpen, onClose }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className={styles.logo}>
-        <span className={styles.logoIcon}>
-          <SVGIcon />
-        </span>
-        <span className={styles.logoText}>Money Guard</span>
-      </div>
       <div className={styles.content}>
+        <div className={styles.logo}>
+          <LogoIcon />
+          <span className={styles.logoText}>Money Guard</span>
+        </div>
+        
         <p className={styles.question}>Are you sure you want to log out?</p>
 
         <div className={styles.buttonGroup}>
-          <button
-            type="button"
-            className={`${styles.button} ${styles.logoutButton}`}
-            onClick={handleLogout}
-          >
-            Log out
-          </button>
-
-          <button
-            type="button"
-            className={`${styles.button} ${styles.cancelButton}`}
-            onClick={onClose}
-          >
+          <Button variant="primary" onClick={handleLogout}>
+            Logout
+          </Button>
+          <Button variant="secondary" onClick={onClose}>
             Cancel
-          </button>
+          </Button>
         </div>
       </div>
     </Modal>
