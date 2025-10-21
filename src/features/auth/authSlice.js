@@ -90,13 +90,13 @@ const authSlice = createSlice({
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
         state.isLoading = true;
-        state.error = null;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;
         state.isRefreshing = false;
         state.isLoading = false;
+        state.error = null;
       })
       .addCase(refreshUser.rejected, (state) => {
         state.user = null;
@@ -104,7 +104,7 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
         state.isRefreshing = false;
         state.isLoading = false;
-        state.error = 'Failed to refresh user';
+        state.error = null; // ✅ error'u null yap, gösterme
       })
 
       .addCase(addTransaction.fulfilled, (state, action) => {

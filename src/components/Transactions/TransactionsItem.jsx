@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { FiEdit2 } from 'react-icons/fi';
 import { deleteTransaction } from '../../features/transactions/transactionsOperations';
 import { refreshUser } from '../../features/auth/authOperations';
 import ModalEditTransaction from '../Modals/ModalEditTransaction/ModalEditTransaction';
+import Button from '../UI/Button/Button';
 import styles from './TransactionsItem.module.css';
 
 const TransactionItem = ({ transaction }) => {
@@ -52,16 +54,15 @@ const TransactionItem = ({ transaction }) => {
               className={styles.editButton}
               aria-label="Edit transaction"
             >
-              ✏️
+              <FiEdit2 size={16} />
             </button>
-            <button
-              type="button"
+            <Button
+              variant="delete"
+              size="small"
               onClick={handleDelete}
-              className={styles.deleteButton}
-              aria-label="Delete transaction"
             >
-              🗑️
-            </button>
+              Delete
+            </Button>
           </div>
         </td>
       </tr>

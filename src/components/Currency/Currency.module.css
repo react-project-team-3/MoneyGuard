@@ -1,13 +1,11 @@
 .currencyWrapper {
   max-width: 320px;
   color: #fbfbfb;
-  background: linear-gradient(
-    210.09deg,
-    rgba(91, 63, 157, 0.2) 8.2%,
-    rgba(155, 81, 224, 0.2) 116.15%
-  );
+  background: rgba(82, 59, 126, 0.6);
   backdrop-filter: blur(50px);
-  margin-top: 32px;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 0;
   margin-left: auto;
   margin-right: auto;
 }
@@ -29,12 +27,12 @@
   background: rgba(255, 255, 255, 0.2);
   font-weight: 700;
   font-size: 12px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   list-style: none;
   padding: 0;
-  margin: 0 0 8px 0;
+  border-radius: 8px;
 }
 
 .currencyItem {
@@ -106,8 +104,6 @@ img {
 
 @media screen and (min-width: 768px) {
   .currencyWrapper {
-    border-radius: 0 0 8px 8px;
-    margin-top: 0;
     max-width: 336px;
   }
 
@@ -132,8 +128,6 @@ img {
 
 @media screen and (min-width: 1280px) {
   .currencyWrapper {
-    border-radius: 8px;
-    margin-top: 32px;
     max-width: 480px;
     height: auto;
   }
@@ -147,7 +141,6 @@ img {
     margin-bottom: 24px;
     padding-left: 95px;
     justify-content: flex-start;
-    border-radius: 8px;
   }
 
   .tableBody {
