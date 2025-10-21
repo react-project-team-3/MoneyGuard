@@ -15,6 +15,7 @@ const HomeTab = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { token } = useSelector((state) => state.auth);
 
+  // İlk yüklemede transactions ve categories'i çek
   useEffect(() => {
     if (token) {
       setAuthToken(token);

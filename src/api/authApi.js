@@ -30,7 +30,6 @@ const getTokenFromStorage = () => {
 
 authApi.interceptors.request.use((config) => {
   const token = getTokenFromStorage();
-  console.log('[authApi] Request interceptor - Token:', token ? 'VAR (length: ' + token.length + ')' : 'YOK');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -92,7 +91,5 @@ authApi.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-console.log('[authApi] Module loaded, interceptor added');
 
 export default authApi;

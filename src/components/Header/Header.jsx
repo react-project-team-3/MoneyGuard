@@ -1,9 +1,9 @@
 import { useState } from 'react';
+import { TbLogout } from 'react-icons/tb';
 import { useAuth } from '../../hooks/useAuth';
 import ModalLogout from '../Modals/ModalLogout/ModalLogout';
 import styles from './Header.module.css';
 import LogoIcon from '../../assets/icons/logo.svg?react';
-import ExitIcon from '../../assets/icons/exit.svg?react';
 
 const Header = () => {
   const { user } = useAuth();
@@ -26,7 +26,7 @@ const Header = () => {
           onClick={() => setIsLogoutModalOpen(true)}
           aria-label="Logout"
         >
-          <ExitIcon />
+          <TbLogout size={18} />
           <span>Exit</span>
         </button>
       </div>

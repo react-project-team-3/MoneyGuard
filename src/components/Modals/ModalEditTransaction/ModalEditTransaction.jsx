@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { updateTransaction } from '../../../features/transactions/transactionsOperations';
+import { refreshUser } from '../../../features/auth/authOperations';
 import { Modal, Input, Button } from '../../UI';
 import styles from './ModalEditTransaction.module.css';
 
@@ -21,12 +22,13 @@ const ModalEditTransaction = ({ isOpen, onClose, transaction }) => {
 
   const isExpense = transaction?.type === 'EXPENSE';
   
-  // ✅ Tarihi doğru formatta al (YYYY-MM-DD)
   const getDateValue = (dateString) => {
     if (!dateString) return '';
-    // API'den gelen tarih "2025-10-17T00:00:00.000Z" formatında
-    // Sadece YYYY-MM-DD kısmını al
     return dateString.split('T')[0];
+  };
+
+  const getAmountValue = (amount) => {
+    return Math.abs(amount || 0);
   };
 
   const {
@@ -36,35 +38,31 @@ const ModalEditTransaction = ({ isOpen, onClose, transaction }) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      amount: Math.abs(transaction?.amount || 0),
+      amount: getAmountValue(transaction?.amount),
       transactionDate: getDateValue(transaction?.transactionDate),
       comment: transaction?.comment || '',
     },
   });
 
   const onSubmit = async (data) => {
-    let amount = Number(data.amount);
+    let amount = Math.abs(Number(data.amount));
     
     if (isExpense) {
-      amount = -Math.abs(amount);
-    } else {
-      amount = Math.abs(amount);
+      amount = -amount;
     }
 
-    // ✅ Tarihi olduğu gibi gönder (YYYY-MM-DD formatında)
     const transactionData = {
       transactionDate: data.transactionDate,
       amount: amount,
       comment: data.comment || '',
     };
 
-    console.log('Updating transaction:', transactionData);
-
     try {
       await dispatch(updateTransaction({ 
         id: transaction.id, 
         transactionData 
       })).unwrap();
+      await dispatch(refreshUser());
       onClose();
     } catch (error) {
       console.error('Error updating transaction:', error);

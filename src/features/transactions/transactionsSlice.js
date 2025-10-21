@@ -20,6 +20,7 @@ const transactionsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // FETCH TRANSACTIONS
       .addCase(fetchTransactions.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -32,6 +33,8 @@ const transactionsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+      // ADD TRANSACTION
       .addCase(addTransaction.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -44,20 +47,27 @@ const transactionsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+      // DELETE TRANSACTION
       .addCase(deleteTransaction.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(deleteTransaction.fulfilled, (state, action) => {
         state.isLoading = false;
+        const deletedId = action.meta.arg;
         state.transactions = state.transactions.filter(
-          (transaction) => transaction.id !== action.payload.id
+          (transaction) => transaction.id !== deletedId
         );
+        console.log('✅ Transaction deleted, ID:', deletedId);
       })
       .addCase(deleteTransaction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+        console.error('❌ Delete transaction failed:', action.payload);
       })
+
+      // UPDATE TRANSACTION
       .addCase(updateTransaction.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -75,6 +85,8 @@ const transactionsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+      // FETCH CATEGORIES
       .addCase(fetchCategories.pending, (state) => {
         state.error = null;
       })

@@ -1,25 +1,33 @@
 :root {
+  --bg-gradient: radial-gradient(
+    circle at 30% 50%,
+    rgba(47, 21, 111, 1) 0%,
+    rgba(10, 6, 27, 1) 100%
+  );
+
   --button-gradient: linear-gradient(
     167deg,
     #ffc727 0%,
     #9e40ba 61.46%,
     #7000ff 90.54%
   );
-  --yellow: #ffb627;
-  --icon-violet: #734aef;
-  --white: #fbfbfb;
-  --white-40: rgba(255, 255, 255, 0.4);
-  --white-60: rgba(255, 255, 255, 0.6);
-  --text-button: #623f8b;
-  --dashboard-text: #ff868d;
-  --form-color: rgba(255, 255, 255, 0.1);
-  --background: #101010;
-  --drop-shadow: (1px 4px 1px rgba(0, 0, 0, 0.25));
-  --button-shadow: (1px 9px 15px 0 rgba(0, 0, 0, 0.2))
 
-  --font-family: "Poppins", sans-serif;
-  --second-family: "Circe", sans-serif;
-  --transition:  all 0.3s ease;
+  --color-primary-yellow: #ffc727;
+  --color-primary-purple: #734aef;
+  --color-secondary-lavender: #c5baff;
+  
+  --color-text-white: #fbfbfb;
+  --color-text-input: rgba(255, 255, 255, 0.6);
+  
+  --color-accent-red: #ff6596;
+  --color-success-green: #24cca7;
+  
+  --color-background-dark: #0a061b;
+  --color-background-purple: #2f156f;
+
+  --font-family-primary: 'Poppins', sans-serif;
+  --font-family-secondary: 'Roboto', sans-serif;
+
+  --transition: all 0.3s ease;
   --scale: scale(1.1);
-
 }

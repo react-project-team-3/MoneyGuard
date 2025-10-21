@@ -1,29 +1,167 @@
-.currency {
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
+.currencyWrapper {
+  max-width: 320px;
+  color: #fbfbfb;
+  background: linear-gradient(
+    210.09deg,
+    rgba(91, 63, 157, 0.2) 8.2%,
+    rgba(155, 81, 224, 0.2) 116.15%
+  );
+  backdrop-filter: blur(50px);
+  margin-top: 32px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.table {
+.currencyTable {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.currencyTableHead {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 48px;
   width: 100%;
-  border-collapse: collapse;
-}
-
-.table th,
-.table td {
-  padding: 12px;
-  text-align: left;
-  font-family: var(--font-family-secondary);
-  font-size: 16px;
-  color: var(--color-text-white);
-}
-
-.table th {
+  background: rgba(255, 255, 255, 0.2);
   font-weight: 700;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px 0;
 }
 
-.table tbody tr {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+.currencyItem {
+  flex: 1;
+  text-align: center;
+}
+
+.tableBody {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.currencyTr {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 55px;
+  font-size: 16px;
+  list-style: none;
+}
+
+.currency {
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+.diagram {
+  position: relative;
+}
+
+.lowerNumber {
+  position: absolute;
+  top: 10px;
+  left: 40px;
+  color: #6E78E8;
+  font-size: 12px;
+  font-weight: 400;
+  margin: 0;
+  z-index: 2;
+}
+
+.higherNumber {
+  position: absolute;
+  top: -18px;
+  right: 92px;
+  color: #6E78E8;
+  font-size: 12px;
+  font-weight: 400;
+  margin: 0;
+  z-index: 2;
+}
+
+.loading {
+  padding: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-family-secondary);
+}
+
+@media screen and (min-width: 768px) {
+  .currencyWrapper {
+    border-radius: 0 0 8px 8px;
+    margin-top: 0;
+    max-width: 336px;
+  }
+
+  .currencyTableHead {
+    justify-content: center;
+    gap: 35px;
+  }
+
+  .currencyItem:nth-child(3) {
+    margin-left: 15px;
+  }
+
+  .currencyTr {
+    gap: 65px;
+    justify-content: space-around;
+  }
+
+  img {
+    height: 88px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .currencyWrapper {
+    border-radius: 8px;
+    margin-top: 32px;
+    max-width: 480px;
+    height: auto;
+  }
+
+  .currencyTable {
+    max-width: 480px;
+  }
+
+  .currencyTableHead {
+    height: 56px;
+    margin-bottom: 24px;
+    padding-left: 95px;
+    justify-content: flex-start;
+    border-radius: 8px;
+  }
+
+  .tableBody {
+    margin-bottom: 15px;
+    padding: 0 20px;
+  }
+
+  .currencyTr {
+    padding: 0;
+    margin-bottom: 14px;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
 }

@@ -1,23 +1,31 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteTransaction } from '../../features/transactions/transactionsOperations';
+import { refreshUser } from '../../features/auth/authOperations';
 import ModalEditTransaction from '../Modals/ModalEditTransaction/ModalEditTransaction';
 import styles from './TransactionsItem.module.css';
 
 const TransactionItem = ({ transaction }) => {
   const dispatch = useDispatch();
+  const { categories } = useSelector((state) => state.transactions);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this transaction?')) {
-      dispatch(deleteTransaction(transaction.id));
+      await dispatch(deleteTransaction(transaction.id));
+      dispatch(refreshUser());
     }
   };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-GB');
+  };
+
+  const getCategoryName = (categoryId) => {
+    const category = categories.find((cat) => cat.id === categoryId);
+    return category ? category.name : '-';
   };
 
   const isIncome = transaction.type === 'INCOME';
@@ -31,7 +39,7 @@ const TransactionItem = ({ transaction }) => {
             {isIncome ? '+' : '-'}
           </span>
         </td>
-        <td>{transaction.categoryId || '-'}</td>
+        <td>{getCategoryName(transaction.categoryId)}</td>
         <td>{transaction.comment || '-'}</td>
         <td className={isIncome ? styles.amountIncome : styles.amountExpense}>
           {Math.abs(transaction.amount).toFixed(2)}
@@ -42,6 +50,7 @@ const TransactionItem = ({ transaction }) => {
               type="button"
               onClick={() => setIsEditModalOpen(true)}
               className={styles.editButton}
+              aria-label="Edit transaction"
             >
               ✏️
             </button>
@@ -49,6 +58,7 @@ const TransactionItem = ({ transaction }) => {
               type="button"
               onClick={handleDelete}
               className={styles.deleteButton}
+              aria-label="Delete transaction"
             >
               🗑️
             </button>

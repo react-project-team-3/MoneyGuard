@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux'; //useSelector
+import { useDispatch } from 'react-redux';
 import { fetchStatistics } from '../../../features/statistics/statisticsOperations';
-/* import StatisticsChart from '../../../components/StatisticsChart/StatisticsChart';
-import StatisticsTable from '../../../components/StatisticsTable/StatisticsTable'; */
+import StatisticsChart from '../../../components/StatisticsChart/StatisticsChart';
+import StatisticsTable from '../../../components/StatisticsTable/StatisticsTable';
 import styles from './StatisticsTab.module.css';
 
 const StatisticsTab = () => {

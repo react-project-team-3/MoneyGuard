@@ -14,9 +14,7 @@ const DashboardLayout = () => {
         <aside className={styles.sidebar}>
           <Navigation />
           <Balance />
-          <div className={styles.currencyDesktop}>
-            <Currency />
-          </div>
+          <Currency />
         </aside>
 
         <main className={styles.content}>
