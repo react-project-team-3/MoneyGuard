@@ -5,7 +5,6 @@ import { FiEdit2 } from 'react-icons/fi';
 import { deleteTransaction } from '../../features/transactions/transactionsOperations';
 import { refreshUser } from '../../features/auth/authOperations';
 import ModalEditTransaction from '../Modals/ModalEditTransaction/ModalEditTransaction';
-import Button from '../UI/Button/Button';
 import styles from './TransactionsItem.module.css';
 
 const TransactionItem = ({ transaction }) => {
@@ -54,15 +53,15 @@ const TransactionItem = ({ transaction }) => {
               className={styles.editButton}
               aria-label="Edit transaction"
             >
-              <FiEdit2 size={16} />
+              <FiEdit2 size={14} />
             </button>
-            <Button
-              variant="delete"
-              size="small"
+            <button
+              type="button"
               onClick={handleDelete}
+              className={styles.deleteButton}
             >
               Delete
-            </Button>
+            </button>
           </div>
         </td>
       </tr>

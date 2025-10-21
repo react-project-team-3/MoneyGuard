@@ -2,26 +2,27 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 15px 20px;
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.logo {
+.logoWrapper {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 }
 
-.logo svg {
-  width: 36px;
-  height: 36px;
+.logoIcon {
+  width: 30px;
+  height: 30px;
 }
 
 .logoText {
   font-family: var(--font-family-primary);
-  font-size: 24px;
+  font-size: 17px;
   font-weight: 400;
   color: var(--color-text-white);
   display: none;
@@ -30,13 +31,17 @@
 .userSection {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .username {
   font-family: var(--font-family-secondary);
   font-size: 18px;
-  color: var(--color-text-white);
+  color: rgba(255, 255, 255, 0.6);
+  display: none;
+}
+
+.bracket {
   display: none;
 }
 
@@ -44,31 +49,46 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
+  padding: 0;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 20px;
-  color: var(--color-text-white);
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
   font-family: var(--font-family-secondary);
   font-size: 16px;
-  transition: all 0.3s ease;
+  transition: var(--transition);
+  cursor: pointer;
 }
 
 .exitButton svg {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
 }
 
 .exitButton:hover {
-  border-color: var(--color-primary-yellow);
+  color: var(--color-text-white);
 }
 
 @media screen and (min-width: 768px) {
+  .logoWrapper {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .logoIcon {
+    width: 36px;
+    height: 36px;
+  }
+
   .logoText {
     display: block;
+    font-size: 19px;
   }
 
   .username {
+    display: block;
+  }
+
+  .bracket {
     display: block;
   }
 }
