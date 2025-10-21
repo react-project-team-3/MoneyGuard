@@ -17,14 +17,18 @@
 }
 
 .table th {
-  padding: 16px 20px;
+  padding: 16px;
   text-align: left;
   font-family: var(--font-family-secondary);
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--color-text-white);
+  color: rgba(255, 255, 255, 0.7);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table th:last-child {
+  text-align: right;
 }
 
 .table td {

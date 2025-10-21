@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import ModalLogout from '../Modals/ModalLogout/ModalLogout';
 import styles from './Header.module.css';
 import LogoIcon from '../../assets/icons/logo.svg?react';
+import BracketIcon from '../../assets/icons/bracket.svg?react';
 
 const Header = () => {
   const { user } = useAuth();
@@ -13,20 +14,21 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>
-        <LogoIcon />
+      <div className={styles.logoWrapper}>
+        <LogoIcon className={styles.logoIcon} />
         <span className={styles.logoText}>Money Guard</span>
       </div>
 
       <div className={styles.userSection}>
         <span className={styles.username}>{username}</span>
+        <BracketIcon className={styles.bracket} />
         <button
           type="button"
           className={styles.exitButton}
           onClick={() => setIsLogoutModalOpen(true)}
           aria-label="Logout"
         >
-          <TbLogout size={18} />
+          <TbLogout size={24} />
           <span>Exit</span>
         </button>
       </div>

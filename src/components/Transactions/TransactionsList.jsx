@@ -22,8 +22,8 @@ const TransactionsList = () => {
             <th>Type</th>
             <th>Category</th>
             <th>Comment</th>
-            <th>Amount</th>
-            <th>Actions</th>
+            <th>Sum</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
