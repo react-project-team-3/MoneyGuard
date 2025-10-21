@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
-import { AiOutlineHome } from 'react-icons/ai';
-import { IoStatsChartOutline } from 'react-icons/io5';
 import styles from './Navigation.module.css';
+import HomeIcon from '../../assets/icons/home.svg?react';
+import StatisticsIcon from '../../assets/icons/statistics.svg?react';
 
 const Navigation = () => {
   return (
@@ -12,7 +12,7 @@ const Navigation = () => {
           isActive ? `${styles.link} ${styles.active}` : styles.link
         }
       >
-        <AiOutlineHome size={24} />
+        <HomeIcon className={styles.icon} />
         <span>Home</span>
       </NavLink>
 
@@ -22,7 +22,7 @@ const Navigation = () => {
           isActive ? `${styles.link} ${styles.active}` : styles.link
         }
       >
-        <IoStatsChartOutline size={24} />
+        <StatisticsIcon className={styles.icon} />
         <span>Statistics</span>
       </NavLink>
     </nav>

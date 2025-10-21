@@ -1,22 +1,23 @@
 .balance {
   padding: 20px;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px);
+  background: rgba(82, 59, 126, 0.6);
+  backdrop-filter: blur(50px);
   border-radius: 8px;
-  text-align: center;
+  text-align: left;
 }
 
 .label {
   font-family: var(--font-family-secondary);
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 400;
   color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 8px;
   text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
 .amount {
   font-family: var(--font-family-primary);
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 700;
   color: var(--color-text-white);
 }

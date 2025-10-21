@@ -1,23 +1,25 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router-dom';
 import { registerSchema } from '../../utils/authValidation';
 import { register as registerUser } from '../../features/auth/authOperations';
 import { clearError } from '../../features/auth/authSlice';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import Loader from '../../components/Loader/Loader';
 import styles from './RegisterForm.module.css';
-import { Link } from 'react-router-dom';
 import EmailIcon from '../../assets/icons/email.svg?react';
 import LockIcon from '../../assets/icons/lock.svg?react';
 import UserIcon from '../../assets/icons/user.svg?react';
 import MoneyGuardIcon from '../../assets/icons/logo.svg?react';
 
-// use shared schema
-
 const RegisterForm = () => {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const { error, isLoading } = useSelector((state) => state.auth);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const {
     register,
@@ -33,6 +35,19 @@ const RegisterForm = () => {
     const { confirmPassword: _, ...userData } = data;
     await dispatch(registerUser(userData));
   };
+
+  const handleLoginClick = () => {
+    setIsNavigating(true);
+    setTimeout(() => {
+      navigate('/login');
+    }, 100);
+  };
+
+  const loading = isLoading || isSubmitting;
+
+  if (isNavigating) {
+    return <Loader />;
+  }
 
   return (
     <div className={styles.formContainer}>
@@ -78,15 +93,18 @@ const RegisterForm = () => {
         {error && <div className={styles.errorMessage}>{error}</div>}
 
         <div className={styles.buttonGroup}>
-          <Button type="submit" variant="primary" disabled={isSubmitting}>
-            {isSubmitting ? 'Loading...' : 'Register'}
+          <Button type="submit" variant="primary" disabled={loading}>
+            {loading ? 'Loading...' : 'Register'}
           </Button>
 
-          <Link to="/login">
-            <Button type="button" variant="secondary">
-              Log In
-            </Button>
-          </Link>
+          <Button 
+            type="button" 
+            variant="secondary" 
+            disabled={loading}
+            onClick={handleLoginClick}
+          >
+            Log In
+          </Button>
         </div>
       </form>
     </div>

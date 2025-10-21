@@ -1,33 +1,55 @@
 :root {
+  /* Background Gradients */
   --bg-gradient: radial-gradient(
     circle at 30% 50%,
     rgba(47, 21, 111, 1) 0%,
     rgba(10, 6, 27, 1) 100%
   );
 
+  /* Button Gradient */
   --button-gradient: linear-gradient(
-    167deg,
-    #ffc727 0%,
-    #9e40ba 61.46%,
-    #7000ff 90.54%
+    117deg,
+    #ffc727 2.61%,
+    #ff6b08 45.35%,
+    #ff4596 91.35%
   );
 
+  /* Primary Colors */
   --color-primary-yellow: #ffc727;
+  --color-primary-orange: #ff6b08;
+  --color-primary-pink: #ff4596;
   --color-primary-purple: #734aef;
+  --color-primary-blue: #4a56e2;
+  
+  /* Secondary Colors */
   --color-secondary-lavender: #c5baff;
   
+  /* Text Colors */
   --color-text-white: #fbfbfb;
   --color-text-input: rgba(255, 255, 255, 0.6);
   
+  /* Accent Colors */
   --color-accent-red: #ff6596;
   --color-success-green: #24cca7;
   
+  /* Background Colors */
   --color-background-dark: #0a061b;
   --color-background-purple: #2f156f;
 
+  /* Form Background */
+  --form-bg-gradient: linear-gradient(
+    167.81deg,
+    rgba(83, 61, 186, 0.7) 0%,
+    rgba(80, 48, 154, 0.7) 43.9%,
+    rgba(106, 70, 165, 0.5) 73.77%,
+    rgba(133, 93, 175, 0.3) 120.3%
+  );
+
+  /* Fonts */
   --font-family-primary: 'Poppins', sans-serif;
   --font-family-secondary: 'Roboto', sans-serif;
 
+  /* Transitions */
   --transition: all 0.3s ease;
   --scale: scale(1.1);
 }

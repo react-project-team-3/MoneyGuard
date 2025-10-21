@@ -1,9 +1,17 @@
 .row {
-  transition: 0.3s ease;
+  transition: var(--transition);
+}
+
+.row td {
+  padding: 16px 20px;
+  font-family: var(--font-family-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-white);
 }
 
 .row:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .income {
@@ -28,20 +36,26 @@
 
 .actions {
   display: flex;
+  align-items: center;
   gap: 8px;
 }
 
-.editButton,
-.deleteButton {
-  padding: 4px 8px;
+.editButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
   background: transparent;
-  border: none;
-  font-size: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: var(--transition);
 }
 
-.editButton:hover,
-.deleteButton:hover {
-  transform: scale(1.2);
+.editButton:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: var(--color-text-white);
 }
