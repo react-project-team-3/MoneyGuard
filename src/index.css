@@ -51,6 +51,11 @@ input::placeholder {
   position: relative;
 }
 
+.appWrapper {
+  min-height: 100vh;
+  background: var(--bg-gradient);
+}
+
 @media (max-width: 1024px) {
   .app-container {
     max-width: 100%;

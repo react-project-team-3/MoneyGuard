@@ -8,7 +8,7 @@
 }
 
 .logoSection {
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 }
 
 .logo {
@@ -27,6 +27,7 @@
   font-family: var(--font-family-primary);
   font-weight: 400;
   font-size: 30px;
+  line-height: 1.5;
   color: var(--color-text-white);
   margin: 0;
 }
@@ -42,6 +43,9 @@
   font-size: 14px;
   text-align: center;
   margin-bottom: 20px;
+  padding: 12px;
+  background: rgba(255, 101, 150, 0.1);
+  border-radius: 4px;
 }
 
 .buttonGroup {
@@ -53,12 +57,6 @@
   width: 100%;
 }
 
-.buttonGroup a {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
 @media screen and (min-width: 768px) {
   .formContainer {
     padding: 60px;
@@ -67,9 +65,5 @@
 
   .buttonGroup {
     align-items: center;
-  }
-
-  .buttonGroup a {
-    width: auto;
   }
 }

@@ -1,0 +1,70 @@
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.label {
+  font-family: var(--font-family-secondary);
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.labelActive {
+  color: var(--color-text-white);
+  font-weight: 700;
+}
+
+.toggleSwitch {
+  position: relative;
+  width: 80px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggleButton {
+  position: absolute;
+  top: 4px;
+  width: 44px;
+  height: 32px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.toggleButtonLeft {
+  left: 4px;
+  background: linear-gradient(117deg, var(--color-income) 0%, #ffa500 100%);
+}
+
+.toggleButtonRight {
+  left: 32px;
+  background: linear-gradient(117deg, var(--color-expense) 0%, #ff6596 100%);
+}
+
+.toggleIcon {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text-white);
+  line-height: 1;
+}
+
+@media screen and (min-width: 768px) {
+  .toggleContainer {
+    gap: 24px;
+  }
+
+  .label {
+    font-size: 18px;
+  }
+}

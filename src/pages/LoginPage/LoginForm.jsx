@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { loginSchema } from '../../utils/authValidation';
 import { login } from '../../features/auth/authOperations';
 import { clearError } from '../../features/auth/authSlice';
@@ -55,6 +55,7 @@ const LoginForm = () => {
           <h1 className={styles.title}>Money Guard</h1>
         </div>
       </div>
+      
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <Input
           type="email"
@@ -62,6 +63,7 @@ const LoginForm = () => {
           register={register('email')}
           error={errors.email?.message}
           icon={<EmailIcon />}
+          variant="auth"
         />
 
         <Input
@@ -70,6 +72,7 @@ const LoginForm = () => {
           register={register('password')}
           error={errors.password?.message}
           icon={<LockIcon />}
+          variant="auth"
         />
 
         {error && <div className={styles.errorMessage}>{error}</div>}

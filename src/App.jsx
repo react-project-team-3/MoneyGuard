@@ -28,40 +28,42 @@ function App() {
   }
 
   return (
-    <div className="app-container">
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              <PublicRoute>
-                <LoginPage />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <PublicRoute>
-                <RegisterPage />
-              </PublicRoute>
-            }
-          />
+    <div className="app-wrapper">
+      <div className="app-container">
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route
+              path="/login"
+              element={
+                <PublicRoute>
+                  <LoginPage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <PublicRoute>
+                  <RegisterPage />
+                </PublicRoute>
+              }
+            />
 
-          <Route
-            path="/dashboard/*"
-            element={
-              <PrivateRoute>
-                <DashboardPage />
-              </PrivateRoute>
-            }
-          />
+            <Route
+              path="/dashboard/*"
+              element={
+                <PrivateRoute>
+                  <DashboardPage />
+                </PrivateRoute>
+              }
+            />
 
-          <Route path="/" element={<Navigate to="/dashboard/home" replace />} />
+            <Route path="/" element={<Navigate to="/dashboard/home" replace />} />
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
+      </div>
     </div>
   );
 }

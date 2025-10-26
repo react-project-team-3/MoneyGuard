@@ -3,9 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { BsCalendar3 } from 'react-icons/bs';
 import { addTransaction } from '../../../features/transactions/transactionsOperations';
 import { refreshUser } from '../../../features/auth/authOperations';
-import { Modal, Input, Button } from '../../UI';
+import Modal from '../../UI/Modal/Modal';
+import Button from '../../UI/Button/Button';
+import ToggleSwitch from '../../UI/ToggleSwitch/ToggleSwitch';
 import styles from './ModalAddTransaction.module.css';
 
 const schema = yup.object({
@@ -27,12 +30,15 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.transactions);
   const [type, setType] = useState('EXPENSE');
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    setValue,
+    watch,
   } = useForm({
     resolver: yupResolver(schema),
     context: { type },
@@ -43,6 +49,8 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
       categoryId: '',
     },
   });
+
+  const selectedCategoryId = watch('categoryId');
 
   useEffect(() => {
     reset({
@@ -102,66 +110,95 @@ const ModalAddTransaction = ({ isOpen, onClose }) => {
     onClose();
   };
 
+  const expenseCategories = categories.filter((cat) => cat.type === 'EXPENSE');
+  const selectedCategory = expenseCategories.find(cat => cat.id === selectedCategoryId);
+
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} title="Add Transaction">
+    <Modal isOpen={isOpen} onClose={handleClose} title="Add transaction">
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <div className={styles.typeSwitch}>
-          <button
-            type="button"
-            className={type === 'INCOME' ? styles.active : ''}
-            onClick={() => setType('INCOME')}
-          >
-            Income
-          </button>
-          <button
-            type="button"
-            className={type === 'EXPENSE' ? styles.active : ''}
-            onClick={() => setType('EXPENSE')}
-          >
-            Expense
-          </button>
-        </div>
+        <ToggleSwitch value={type} onChange={setType} />
 
         {type === 'EXPENSE' && (
-          <div className={styles.field}>
-            <select
-              {...register('categoryId')}
-              className={styles.select}
+          <div className={styles.selectWrapper}>
+            <div 
+              className={`${styles.selectTrigger} ${isSelectOpen ? styles.selectTriggerOpen : ''}`}
+              onClick={() => setIsSelectOpen(!isSelectOpen)}
             >
-              <option value="">Select category</option>
-              {categories
-                .filter((cat) => cat.type === 'EXPENSE')
-                .map((cat) => (
-                  <option key={cat.id} value={cat.id}>
+              <span className={selectedCategory ? styles.selectedText : styles.placeholderText}>
+                {selectedCategory ? selectedCategory.name : 'Select a category'}
+              </span>
+              <svg 
+                className={`${styles.selectArrow} ${isSelectOpen ? styles.selectArrowOpen : ''}`}
+                width="16" 
+                height="16" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+
+            {isSelectOpen && (
+              <div className={styles.selectDropdown}>
+                {expenseCategories.map((cat) => (
+                  <div
+                    key={cat.id}
+                    className={`${styles.selectOption} ${selectedCategoryId === cat.id ? styles.selectOptionSelected : ''}`}
+                    onClick={() => {
+                      setValue('categoryId', cat.id);
+                      setIsSelectOpen(false);
+                    }}
+                  >
                     {cat.name}
-                  </option>
+                  </div>
                 ))}
-            </select>
+              </div>
+            )}
             {errors.categoryId && (
               <span className={styles.error}>{errors.categoryId.message}</span>
             )}
           </div>
         )}
 
-        <Input
-          type="number"
-          step="0.01"
-          placeholder="0.00"
-          register={register('amount')}
-          error={errors.amount?.message}
-        />
+        <div className={styles.inputRow}>
+          <div className={styles.inputGroup}>
+            <input
+              type="number"
+              step="0.01"
+              placeholder="0.00"
+              className={styles.input}
+              {...register('amount')}
+            />
+            {errors.amount && (
+              <span className={styles.error}>{errors.amount.message}</span>
+            )}
+          </div>
 
-        <Input
-          type="date"
-          register={register('transactionDate')}
-          error={errors.transactionDate?.message}
-        />
+          <div className={styles.inputGroup}>
+            <div className={styles.dateInputWrapper}>
+              <input
+                type="date"
+                className={styles.input}
+                {...register('transactionDate')}
+              />
+              <BsCalendar3 className={styles.calendarIcon} />
+            </div>
+            {errors.transactionDate && (
+              <span className={styles.error}>{errors.transactionDate.message}</span>
+            )}
+          </div>
+        </div>
 
-        <Input
-          type="text"
-          placeholder="Comment"
-          register={register('comment')}
-        />
+        <div className={styles.inputGroup}>
+          <input
+            type="text"
+            placeholder="Comment"
+            className={styles.input}
+            {...register('comment')}
+          />
+        </div>
 
         <div className={styles.buttons}>
           <Button type="submit" variant="primary" disabled={isSubmitting}>

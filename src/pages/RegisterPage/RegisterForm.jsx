@@ -57,13 +57,15 @@ const RegisterForm = () => {
           <h1 className={styles.title}>Money Guard</h1>
         </div>
       </div>
+      
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <Input
           type="text"
-          placeholder="Username"
+          placeholder="Name"
           register={register('username')}
           error={errors.username?.message}
           icon={<UserIcon />}
+          variant="auth"
         />
 
         <Input
@@ -72,6 +74,7 @@ const RegisterForm = () => {
           register={register('email')}
           error={errors.email?.message}
           icon={<EmailIcon />}
+          variant="auth"
         />
 
         <Input
@@ -80,6 +83,7 @@ const RegisterForm = () => {
           register={register('password')}
           error={errors.password?.message}
           icon={<LockIcon />}
+          variant="auth"
         />
 
         <Input
@@ -88,6 +92,7 @@ const RegisterForm = () => {
           register={register('confirmPassword')}
           error={errors.confirmPassword?.message}
           icon={<LockIcon />}
+          variant="auth"
         />
 
         {error && <div className={styles.errorMessage}>{error}</div>}
