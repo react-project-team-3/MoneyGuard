@@ -7,10 +7,14 @@ const Input = ({
   error,
   icon,
   register,
+  variant = 'default', // 'default' veya 'auth'
   ...rest
 }) => {
   return (
-    <div className={styles.inputWrapper}>
+    <div className={clsx(
+      styles.inputWrapper,
+      variant === 'auth' && styles.inputWrapperAuth
+    )}>
       <div className={styles.inputContainer}>
         {icon && <span className={styles.icon}>{icon}</span>}
         
@@ -20,7 +24,9 @@ const Input = ({
           className={clsx(
             styles.input,
             error && styles.error,
-            icon && styles.withIcon
+            icon && styles.withIcon,
+            type === 'date' && styles.dateInput,
+            variant === 'auth' && styles.inputAuth
           )}
           {...register}
           {...rest}

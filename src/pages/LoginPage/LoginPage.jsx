@@ -3,7 +3,7 @@ import styles from './LoginPage.module.css';
 
 const LoginPage = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.page}>
       <div className={styles.formSection}>
         <LoginForm />
       </div>
