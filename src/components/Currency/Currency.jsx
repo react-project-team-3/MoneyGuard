@@ -1,14 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCurrencyRates } from '../../features/currency/currencyOperations';
-import useMedia from '../../hooks/useMedia';
 import styles from './Currency.module.css';
-import currencyImage from '../../assets/images/currency.png';
 
 const Currency = () => {
   const dispatch = useDispatch();
-  const { rates, isLoading } = useSelector((state) => state.currency);
-  const { isDesktop } = useMedia();
+  const { rates, isLoading, error } = useSelector((state) => state.currency);
 
   useEffect(() => {
     dispatch(fetchCurrencyRates());
@@ -17,45 +14,65 @@ const Currency = () => {
   if (isLoading) {
     return (
       <div className={styles.currencyWrapper}>
-        <div className={styles.loading}>Loading...</div>
+        <div className={styles.loading}>Loading rates...</div>
       </div>
     );
   }
 
-  const usdRate = rates.find((r) => r.currency === 'USD')?.rate || '0.00';
-  const eurRate = rates.find((r) => r.currency === 'EUR')?.rate || '0.00';
+  if (error) {
+    return (
+      <div className={styles.currencyWrapper}>
+        <div className={styles.error}>Unable to load currency rates</div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.currencyWrapper}>
       <div className={styles.currencyTable}>
-        <ul className={styles.currencyTableHead}>
-          <li className={styles.currencyItem}>Currency</li>
-          <li className={styles.currencyItem}>Purchase</li>
-          <li className={styles.currencyItem}>Sale</li>
-        </ul>
-        <ul className={styles.tableBody}>
-          <li className={styles.currencyTr}>
-            <p className={styles.currency}>USD</p>
-            <p className={styles.currency}>{usdRate}</p>
-            <p className={styles.currency}>{usdRate}</p>
-          </li>
-          <li className={styles.currencyTr}>
-            <p className={styles.currency}>EUR</p>
-            <p className={styles.currency}>{eurRate}</p>
-            <p className={styles.currency}>{eurRate}</p>
-          </li>
-        </ul>
+        <div className={styles.currencyTableHead}>
+          <div className={styles.currencyItem}>Currency</div>
+          <div className={styles.currencyItem}>Purchase</div>
+          <div className={styles.currencyItem}>Sale</div>
+        </div>
+
+        <div className={styles.tableBody}>
+          {rates.map((rate) => (
+            <div key={rate.currency} className={styles.currencyTr}>
+              <div className={styles.currency}>{rate.currency}</div>
+              <div className={styles.currency}>{rate.purchase}</div>
+              <div className={styles.currency}>{rate.sale}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {isDesktop ? (
-        <div className={styles.diagram}>
-          <p className={styles.lowerNumber}>{usdRate}</p>
-          <p className={styles.higherNumber}>{eurRate}</p>
-          <img src={currencyImage} alt="Currency diagram" />
-        </div>
-      ) : (
-        <img src={currencyImage} alt="Currency diagram" />
-      )}
+      <div className={styles.decorativeWave}>
+        <svg viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M0,50 Q100,20 200,50 T400,50 L400,100 L0,100 Z"
+            fill="url(#gradient)"
+            opacity="0.3"
+          />
+          <path
+            d="M0,60 Q100,35 200,60 T400,60"
+            stroke="url(#lineGradient)"
+            strokeWidth="2"
+            fill="none"
+          />
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#6E78E8" />
+              <stop offset="100%" stopColor="#9B51E0" />
+            </linearGradient>
+            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#6E78E8" />
+              <stop offset="50%" stopColor="#9B51E0" />
+              <stop offset="100%" stopColor="#6E78E8" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
     </div>
   );
 };

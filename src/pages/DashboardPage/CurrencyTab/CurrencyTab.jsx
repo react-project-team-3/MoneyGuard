@@ -4,7 +4,7 @@ import styles from './CurrencyTab.module.css';
 const CurrencyTab = () => {
   return (
     <div className={styles.currencyTab}>
-      <h2 className={styles.title}>Currency</h2>
+      <h1 className={styles.title}>Currency</h1>
       <Currency />
     </div>
   );

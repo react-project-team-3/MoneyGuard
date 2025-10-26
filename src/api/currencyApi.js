@@ -3,7 +3,7 @@ import axios from 'axios';
 const MONOBANK_API = 'https://api.monobank.ua/bank/currency';
 const CACHE_KEY = 'currency_rates';
 const CACHE_TIME_KEY = 'currency_rates_time';
-const CACHE_DURATION = 60 * 60 * 1000;
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
 
 export const getCurrencyRates = async () => {
   const cachedData = localStorage.getItem(CACHE_KEY);
@@ -22,12 +22,10 @@ export const getCurrencyRates = async () => {
   try {
     response = await axios.get(MONOBANK_API);
   } catch (err) {
-    // If rate limit or other transient error and we have cached data, return it as a fallback
     const status = err.response?.status;
     if (status === 429 && cachedData) {
       return JSON.parse(cachedData);
     }
-    // otherwise rethrow to be handled upstream
     throw err;
   }
 
@@ -39,8 +37,16 @@ export const getCurrencyRates = async () => {
   );
 
   const rates = [
-    { currency: 'USD', rate: usdRate?.rateSell?.toFixed(2) || 'N/A' },
-    { currency: 'EUR', rate: eurRate?.rateSell?.toFixed(2) || 'N/A' },
+    {
+      currency: 'USD',
+      purchase: usdRate?.rateBuy?.toFixed(2) || 'N/A',
+      sale: usdRate?.rateSell?.toFixed(2) || 'N/A',
+    },
+    {
+      currency: 'EUR',
+      purchase: eurRate?.rateBuy?.toFixed(2) || 'N/A',
+      sale: eurRate?.rateSell?.toFixed(2) || 'N/A',
+    },
   ];
 
   localStorage.setItem(CACHE_KEY, JSON.stringify(rates));

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import styles from './Modal.module.css';
 
 const Modal = ({ isOpen, onClose, title, children }) => {
-  // close with ESC key
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === 'Escape') {
@@ -10,13 +10,11 @@ const Modal = ({ isOpen, onClose, title, children }) => {
       }
     };
 
-    // when modal is open listen for escape key
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
       document.body.style.overflow = 'hidden';
     }
 
-    // cleanup
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
@@ -25,15 +23,13 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 
   if (!isOpen) return null;
 
-  // backdrop click handler
   const handleBackdropClick = (event) => {
     if (event.target === event.currentTarget) {
       onClose();
     }
   };
 
-  return (
-    // backdrop (overlay)
+  const modalContent = (
     <div className={styles.backdrop} onClick={handleBackdropClick}>
       <div className={styles.modal}>
         <button
@@ -54,6 +50,11 @@ const Modal = ({ isOpen, onClose, title, children }) => {
         <div className={styles.content}>{children}</div>
       </div>
     </div>
+  );
+
+  return ReactDOM.createPortal(
+    modalContent,
+    document.body
   );
 };
 

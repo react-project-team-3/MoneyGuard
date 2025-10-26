@@ -10,7 +10,7 @@ import Loader from './components/Loader/Loader';
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage/DashboardPage'));
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 
 function App() {
   const dispatch = useDispatch();
@@ -28,42 +28,41 @@ function App() {
   }
 
   return (
-    <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <LoginPage />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <PublicRoute>
-              <RegisterPage />
-            </PublicRoute>
-          }
-        />
+    <div className="app-container">
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <RegisterPage />
+              </PublicRoute>
+            }
+          />
 
-        <Route
-          path="/dashboard/*"
-          element={
-            <PrivateRoute>
-              <DashboardPage />
-            </PrivateRoute>
-          }
-        />
-        
-        <Route 
-          path="/" 
-          element={<Navigate to="/dashboard/home" replace />}
-        />
+          <Route
+            path="/dashboard/*"
+            element={
+              <PrivateRoute>
+                <DashboardPage />
+              </PrivateRoute>
+            }
+          />
 
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </Suspense>
+          <Route path="/" element={<Navigate to="/dashboard/home" replace />} />
+
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
+    </div>
   );
 }
 
