@@ -2,23 +2,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--bg-gradient);
   position: relative;
-}
-
-.container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('../../assets/images/gradient-mobile.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.3;
-  z-index: 0;
 }
 
 .mainContent {
@@ -44,20 +28,12 @@
 }
 
 @media screen and (min-width: 768px) {
-  .container::before {
-    background-image: url('../../assets/images/gradient-tablet.webp');
-  }
-
   .mainContent {
     padding: 32px;
   }
 }
 
 @media screen and (min-width: 1280px) {
-  .container::before {
-    background-image: url('../../assets/images/gradient-desktop.webp');
-  }
-
   .mainContent {
     flex-direction: row;
     gap: 0;

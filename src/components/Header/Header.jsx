@@ -14,10 +14,10 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <div className={styles.logoWrapper}>
-        <LogoIcon className={styles.logoIcon} />
-        <span className={styles.logoText}>Money Guard</span>
-      </div>
+        <div className={styles.logo}>
+          <LogoIcon />
+          <span className={styles.logoText}>Money Guard</span>
+        </div>
 
       <div className={styles.userSection}>
         <span className={styles.username}>{username}</span>

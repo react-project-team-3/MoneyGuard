@@ -1,23 +1,15 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FiEdit2 } from 'react-icons/fi';
-import { deleteTransaction } from '../../features/transactions/transactionsOperations';
-import { refreshUser } from '../../features/auth/authOperations';
 import ModalEditTransaction from '../Modals/ModalEditTransaction/ModalEditTransaction';
+import ModalDeleteTransaction from '../Modals/ModalDeleteTransaction/ModalDeleteTransaction';
 import styles from './TransactionsItem.module.css';
 
 const TransactionItem = ({ transaction }) => {
-  const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.transactions);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to delete this transaction?')) {
-      await dispatch(deleteTransaction(transaction.id));
-      dispatch(refreshUser());
-    }
-  };
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -57,7 +49,7 @@ const TransactionItem = ({ transaction }) => {
             </button>
             <button
               type="button"
-              onClick={handleDelete}
+              onClick={() => setIsDeleteModalOpen(true)}
               className={styles.deleteButton}
             >
               Delete
@@ -70,6 +62,15 @@ const TransactionItem = ({ transaction }) => {
         <ModalEditTransaction
           isOpen={isEditModalOpen}
           onClose={() => setIsEditModalOpen(false)}
+          transaction={transaction}
+        />,
+        document.body
+      )}
+
+      {isDeleteModalOpen && createPortal(
+        <ModalDeleteTransaction
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
           transaction={transaction}
         />,
         document.body

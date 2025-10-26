@@ -32,6 +32,10 @@
   --color-accent-red: #ff6596;
   --color-success-green: #24cca7;
   
+  /* Transaction Colors */
+  --color-income: #ffb627;
+  --color-expense: #ff868d;
+  
   /* Background Colors */
   --color-background-dark: #0a061b;
   --color-background-purple: #2f156f;
